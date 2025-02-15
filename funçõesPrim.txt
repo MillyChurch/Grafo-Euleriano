@@ -1,0 +1,22 @@
+
+Função prim:
+Uma função que recebe um vertice de start
+	Cria uma lista de quem já está conectado
+	Adiciona o vertice de start
+	procura novas arestas com valores menores até que a lista dos já conectados tenha o tamanho da lista do grafo
+
+
+Uma função que recebe uma lista de vértices
+	Para cada valor dessa lista, faça a verificação abaixo 
+		salve o valor da aresta caso o valor dos indices forem positivos
+		caso o valor dos indices forem positivos e o valor da aresta for menor que o valor salvo anteriormente, salve ele
+	retorne a nova aresta, que representa a menor aresta possível
+
+		
+uma função que receba um valor e uma lista de vertices
+	analise as arestas desse valor (vertice)
+		caso encontre uma aresta incidente à um vértice que não esteja presenta na lista de vertices, salve ele
+		caso encontre uma aresta incidente à um vértice que não esteja presenta na lista de vertices com o peso menor, salve ele
+	
+	Caso não tenha encontrado nenhum valor que atendeu aos requisitos, devolva uma aresta com índices negativos
+	Caso tenha encontrado um valor que atendeu aos requisitos, devolva um conjunto de verticeInicial, verticeEncontrado, valor
