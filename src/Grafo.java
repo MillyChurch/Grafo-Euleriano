@@ -1,3 +1,4 @@
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -259,24 +260,48 @@ public class Grafo {
         //Para cada aresta, verificar se pode inserir
         for(PesoAndIndex bb: aa){
             verificaSePodeColocarAresta(grafo, bb);
-            if(grafo.verificaSeConexo())return grafo;
         }
 
         return grafo;
     }
-    public void verificaSePodeColocarAresta(Grafo grafo, PesoAndIndex pai){
+
+    private void verificaSePodeColocarAresta(Grafo grafo, PesoAndIndex pai){
         //Se estiver em loop, não pode ser inserida
 
-        //Verificação do loop: passar por todos os vertices e verificar se algum tem os dois vertices da nova aresta em comum
-        for(int i=0; i<grafo.listaDeAdj.size(); i++){
-            if(grafo.listaDeAdj.get(i).contains(pai.indexA) && grafo.listaDeAdj.get(i).contains(pai.indexB)){
+        //Verificação do loop: verificar se algum tem os dois vertices da nova aresta em comum
+
+            if(verificaSeLoopa(pai.indexA, pai.indexB, new ArrayList<>(), grafo)){
                 return;
             }
-        }
 
         grafo.adicionarArestas(pai.indexA, pai.indexB, pai.peso);
     }
-    public ArrayList<PesoAndIndex> verticesEmOrdem(){
+
+    //Verifica se existe um caminho
+    private boolean verificaSeLoopa(int start, int end, ArrayList<Integer>verticesVisitados, Grafo grafo){
+
+        verticesVisitados.add(start);
+       ArrayList<Integer> vericeAtualLista = grafo.listaDeAdj.get(start);
+
+
+        //Verifica se existe conexão direta
+        if(vericeAtualLista.contains(end)){
+            return true;
+        }
+
+        //Se não existe conexão direta navegue até achar
+        for(int i = 0; i < vericeAtualLista.size(); i++){
+
+            if(verticesVisitados.contains(vericeAtualLista.get(i))) continue;
+            boolean resultado =  verificaSeLoopa(vericeAtualLista.get(i), end, verticesVisitados, grafo);
+            if(resultado)return true;
+
+        }
+
+        return false;
+
+    }
+    private ArrayList<PesoAndIndex> verticesEmOrdem(){
 
         ArrayList<PesoAndIndex> arestas = new ArrayList<>();
 

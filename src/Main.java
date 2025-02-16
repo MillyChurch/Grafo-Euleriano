@@ -14,7 +14,6 @@ public class Main {
         grafo.adicionarArestas(4,0,5);
         grafo.adicionarArestas(2,4,6);
 
-
         System.out.println("GRAFO");
         grafo.mostrarGrafo();
 
@@ -28,8 +27,6 @@ public class Main {
         grafo.kruskal(true).mostrarGrafo();
         System.out.println("\n:ARVORE GERADORA CUSTO MÁXIMO (Kruskal)");
         grafo.kruskal(false).mostrarGrafo();
-
-
 
 
 
