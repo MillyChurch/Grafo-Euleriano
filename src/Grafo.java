@@ -82,9 +82,11 @@ public class Grafo {
     }
     //Para ser um grafo euleriano deve ser conexo
     public boolean verificaSeConexo(){
-        for(int i=0; i< listaDeAdj.size(); i++){
-            if(listaDeAdj.get(i).size() < 1){
-                return false;
+        for(int i=0; i< listaDeAdj.size()-1; i++){
+            for(int j=i+1; j< listaDeAdj.size(); j++) {
+                if (verificaSeLoopa(i, j, new ArrayList<Integer>(), this) == false) {
+                    return false;
+                }
             }
         }
         return true;
