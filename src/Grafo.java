@@ -328,6 +328,132 @@ public class Grafo {
         return arestas;
     }
 
+    public Grafo buscaEmProfundidade(int verticeInicial){
+        Grafo grafo = new Grafo(listaDeAdj.size());
+        ArrayList<Integer> jaVisitiado = new ArrayList<Integer>();
+        dfs(grafo,verticeInicial, jaVisitiado);
+        return grafo;
+    }
+    public boolean buscaEmProfundidade(int verticeInicial, int verticeDesejado){
+        ArrayList<Integer> jaVisitiado = new ArrayList<Integer>();
+        return dfs(verticeInicial, verticeDesejado, jaVisitiado);
+    }
+    private void dfs(Grafo grafo, int verticeAtual, ArrayList<Integer> verticesJaVisitados){
+        //verificar se o vértice atual já foi visitado
+        if (verticesJaVisitados.contains(verticeAtual)){
+            return;
+        }
+
+        //Não foi visitado
+        verticesJaVisitados.add(verticeAtual);
+
+        //verificar se o vertice atual tem irmãos não visitados
+        //Cada i é a posição de um irmão
+        for(int i = 0; i < listaDeAdj.get(verticeAtual).size(); i++){
+            if(!verticesJaVisitados.contains(listaDeAdj.get(verticeAtual).get(i))){
+
+                float valorAresta = valores.get(verticeAtual).get(i);
+                grafo.adicionarArestas(verticeAtual,listaDeAdj.get(verticeAtual).get(i), valorAresta);
+                dfs(grafo, listaDeAdj.get(verticeAtual).get(i), verticesJaVisitados);
+
+            }
+
+        }
+
+    }
+    private boolean dfs(int verticeAtual, int verticeDesejado, ArrayList<Integer> verticesJaVisitados){
+
+        if(verticeAtual == verticeDesejado){
+            return true;
+        }
+
+        //verificar se o vértice atual já foi visitado
+        if (!verticesJaVisitados.contains(verticeAtual)) {
+
+            //Não foi visitado ainda
+            verticesJaVisitados.add(verticeAtual);
+
+            //verificar se o vertice atual tem irmãos não visitados
+            //Cada i é a posição de um irmão
+            for (int i = 0; i < listaDeAdj.get(verticeAtual).size(); i++) {
+                if (!verticesJaVisitados.contains(listaDeAdj.get(verticeAtual).get(i))) {
+                    System.out.print(verticeAtual + " Pra " + listaDeAdj.get(verticeAtual).get(i) + ", ");
+                    boolean resultado = dfs(listaDeAdj.get(verticeAtual).get(i), verticeDesejado, verticesJaVisitados);
+                    if (resultado) return true;
+                }
+            }
+
+        }
+            return false;
+    }
+
+    public Grafo buscaEmLargura(int verticeInicial){
+        Grafo grafo = new Grafo(listaDeAdj.size());
+        ArrayList<Integer> jaVisitiado = new ArrayList<Integer>();
+        ArrayList<Integer> jaConectado = new ArrayList<Integer>();
+        jaConectado.add(verticeInicial);
+        bfs(grafo,verticeInicial, jaVisitiado, jaConectado);
+        return grafo;
+    }
+    public boolean buscaEmLargura(int verticeInicial, int verticeDesejado){
+        ArrayList<Integer> jaVisitiado = new ArrayList<Integer>();
+        return bfs(verticeInicial,  verticeDesejado, jaVisitiado);
+    }
+    private void bfs(Grafo grafo, int verticeAtual, ArrayList<Integer> verticesJaVisitados, ArrayList<Integer> verticesJaConectados){
+
+        //já foi visitado
+        if(verticesJaVisitados.contains(verticeAtual)) {
+            return;
+        }
+        verticesJaVisitados.add(verticeAtual);
+
+
+        for(int i = 0; i < listaDeAdj.get(verticeAtual).size(); i++){
+
+            if(!verticesJaConectados.contains(listaDeAdj.get(verticeAtual).get(i))){
+                float valorAresta = valores.get(verticeAtual).get(i);
+                grafo.adicionarArestas(verticeAtual,listaDeAdj.get(verticeAtual).get(i), valorAresta);
+                verticesJaConectados.add(listaDeAdj.get(verticeAtual).get(i));
+            }
+
+        }
+
+        for(int i = 0; i < listaDeAdj.get(verticeAtual).size(); i++){
+
+            bfs(grafo, listaDeAdj.get(verticeAtual).get(i), verticesJaVisitados, verticesJaConectados);
+
+        }
+
+    }
+    private boolean bfs(int verticeAtual, int verticeDesejado, ArrayList<Integer> verticesJaVisitados){
+
+
+        if(verticeAtual == verticeDesejado) {
+            return true;
+        }
+
+        //não foi visitado
+        if(!verticesJaVisitados.contains(verticeAtual)) {
+            verticesJaVisitados.add(verticeAtual);
+
+
+            for (int i = 0; i < listaDeAdj.get(verticeAtual).size(); i++) {
+                System.out.print(verticeAtual + " Pra " + listaDeAdj.get(verticeAtual).get(i) + ", ");
+                if(listaDeAdj.get(verticeAtual).get(i) == verticeDesejado){
+                    return  true;
+                }
+            }
+            System.out.println("\n");
+
+            for (int i = 0; i < listaDeAdj.get(verticeAtual).size(); i++) {
+                boolean resultado = bfs(listaDeAdj.get(verticeAtual).get(i), verticeDesejado, verticesJaVisitados);
+                if(resultado) return resultado;
+            }
+        }
+
+        return false;
+    }
+
 }
 
 

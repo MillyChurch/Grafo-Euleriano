@@ -4,16 +4,29 @@ import java.util.Collections;
 public class Main {
     public static void main(String[] args) {
 
-        int numeroDeVertices = 5;
+        int numeroDeVertices = 7;
         Grafo grafo = new Grafo(numeroDeVertices);
 
         grafo.adicionarArestas(0,1,1);
-        grafo.adicionarArestas(1,2,2);
+        grafo.adicionarArestas(2,0,1);
+        grafo.adicionarArestas(2,1,2);
         grafo.adicionarArestas(2,3,3);
-        grafo.adicionarArestas(3,4,4);
-        grafo.adicionarArestas(4,0,5);
-        grafo.adicionarArestas(2,4,6);
+        grafo.adicionarArestas(2,4,4);
+        grafo.adicionarArestas(2,5,5);
+        grafo.adicionarArestas(2,6,6);
+        grafo.adicionarArestas(3,4,1);
 
+        System.out.println("Busca em profundidade");
+        boolean buscado = grafo.buscaEmProfundidade(0,5);
+        System.out.println(buscado);
+
+        System.out.println("\n\n");
+
+        System.out.println("Busca em largura");
+        boolean buscadoL = grafo.buscaEmLargura(0,5);
+        System.out.println(buscadoL);
+
+        System.out.println("\n\n");
         System.out.println("Grafo é conexo?: " + grafo.verificaSeConexo());
 
         System.out.println("GRAFO");
@@ -29,6 +42,8 @@ public class Main {
         grafo.kruskal(true).mostrarGrafo();
         System.out.println("\n:ARVORE GERADORA CUSTO MÁXIMO (Kruskal)");
         grafo.kruskal(false).mostrarGrafo();
+
+
 
 
 
