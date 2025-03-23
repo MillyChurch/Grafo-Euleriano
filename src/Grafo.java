@@ -454,6 +454,79 @@ public class Grafo {
         return false;
     }
 
+    public void mostraConjuntosIndependentes(){
+
+        ArrayList<Integer> maiorInd = new ArrayList<>();
+
+        for(int i = 0; i < listaDeAdj.size(); i++){
+            ArrayList<Integer> conjunto = retornaConjuntoIndependenteComecandoDe(i);
+            if(conjunto.size() > maiorInd.size()) maiorInd = conjunto;
+            System.out.println("Conjunto independente começando de: " + i  + conjunto);
+        }
+
+    }
+    public ArrayList<Integer> retornaConjuntoIndependenteComecandoDe(int vertice){
+
+        ArrayList<Integer> inclusos = new ArrayList<>();
+        inclusos.add(vertice);
+
+        for(int i = 0; i < listaDeAdj.size(); i++){
+            if(inclusos.contains(i)) continue;
+
+            //Verificar se o vertice pode ser adicionado
+            boolean serIncluido = true;
+            for (int j = 0; j < inclusos.size(); j++) {
+
+                //Caso seja conectado com algum vertice dos inclusos, não pode ser incluído
+                if (verificarAdjascencia(i, inclusos.get(j))){
+                    serIncluido = false;
+                    break;
+                }
+            }
+            if(serIncluido) inclusos.add(i);
+
+        }
+
+        return inclusos;
+
+    }
+
+    public void mostraCliques(){
+
+        ArrayList<Integer> maiorInd = new ArrayList<>();
+
+        for(int i = 0; i < listaDeAdj.size(); i++){
+            ArrayList<Integer> conjunto = retornaCliqueComecandoDe(i);
+            if(conjunto.size() > maiorInd.size()) maiorInd = conjunto;
+            System.out.println("Clique começando de: " + i  + conjunto);
+        }
+
+    }
+    public ArrayList<Integer> retornaCliqueComecandoDe(int vertice){
+
+        ArrayList<Integer> inclusos = new ArrayList<>();
+        inclusos.add(vertice);
+
+        for(int i = 0; i < listaDeAdj.size(); i++){
+            if(inclusos.contains(i)) continue;
+
+            //Verificar se o vertice pode ser adicionado
+            boolean serIncluido = true;
+            for (int j = 0; j < inclusos.size(); j++) {
+
+                //Caso não seja conectado com algum vertice dos inclusos, não pode ser incluído
+                if (!verificarAdjascencia(i, inclusos.get(j))){
+                    serIncluido = false;
+                    break;
+                }
+            }
+            if(serIncluido) inclusos.add(i);
+
+        }
+
+        return inclusos;
+
+    }
 }
 
 

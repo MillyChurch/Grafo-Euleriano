@@ -43,6 +43,9 @@ public class Main {
         System.out.println("\n:ARVORE GERADORA CUSTO MÁXIMO (Kruskal)");
         grafo.kruskal(false).mostrarGrafo();
 
+        grafo.mostraConjuntosIndependentes();
+        grafo.mostraCliques();
+
 
 
 
